@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Authorization Callback | Condominio Jorge Peixinho 314</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="page">
+      <article class="panel document">
+        <a class="back" href="index.html">Back</a>
+        <h1>Authorization Callback</h1>
+        <p>
+          This page is used only to receive the authorization result from Enable
+          Banking after bank authentication.
+        </p>
+
+        <h2>Authorization code</h2>
+        <pre id="codeBox">Reading URL...</pre>
+
+        <h2>Status</h2>
+        <pre id="statusBox">Reading URL...</pre>
+      </article>
+    </main>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get("code");
+      const state = params.get("state");
+      const error = params.get("error");
+      const errorDescription = params.get("error_description");
+
+      document.getElementById("codeBox").textContent = code || "No code found in the URL.";
+      document.getElementById("statusBox").textContent = error
+        ? `Error: ${error}\n${errorDescription || ""}`
+        : `State: ${state || "No state found"}\nCopy the code above and use it to create the API session.`;
+    </script>
+  </body>
+</html>
