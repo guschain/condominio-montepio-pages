@@ -3,17 +3,67 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="referrer" content="no-referrer">
     <title>Authorization Callback | Condominio Jorge Peixinho 314</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #172033;
+        background: #f5f7fb;
+        line-height: 1.55;
+      }
+      main {
+        width: min(920px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 56px 0;
+      }
+      article {
+        max-width: 760px;
+        padding: 32px;
+        border: 1px solid #dfe5ee;
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 18px 45px rgba(23, 32, 51, 0.08);
+      }
+      h1 {
+        margin: 0 0 16px;
+        font-size: clamp(2rem, 5vw, 3.25rem);
+        line-height: 1.05;
+        letter-spacing: 0;
+      }
+      h2 {
+        margin: 28px 0 8px;
+        font-size: 1.15rem;
+      }
+      p { margin: 0 0 16px; }
+      pre {
+        overflow-wrap: anywhere;
+        white-space: pre-wrap;
+        padding: 12px;
+        border: 1px solid #dfe5ee;
+        border-radius: 6px;
+        background: #f8fafc;
+      }
+      @media (max-width: 560px) {
+        main {
+          width: min(100% - 20px, 920px);
+          padding: 20px 0;
+        }
+        article { padding: 22px; }
+      }
+    </style>
   </head>
   <body>
-    <main class="page">
-      <article class="panel document">
-        <a class="back" href="index.html">Back</a>
+    <main>
+      <article>
         <h1>Authorization Callback</h1>
         <p>
-          This page is used only to receive the authorization result from Enable
-          Banking after bank authentication.
+          This page only reads the authorization result from the URL and then
+          removes the query string from the browser address bar.
         </p>
 
         <h2>Authorization code</h2>
@@ -29,6 +79,10 @@
       const state = params.get("state");
       const error = params.get("error");
       const errorDescription = params.get("error_description");
+
+      if (window.location.search) {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
 
       document.getElementById("codeBox").textContent = code || "No code found in the URL.";
       document.getElementById("statusBox").textContent = error
